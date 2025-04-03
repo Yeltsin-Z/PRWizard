@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRWizard - GitHub PR Creator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-git me-3" style="font-size: 1.5rem;"></i>
+                    <h2 class="mb-0">PRWizard</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <p>Create pull requests for all repositories with a single click:</p>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>drive-frontend</span>
+                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>drive</span>
+                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>tesseract</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="prTitle" class="form-label">
+                        <i class="bi bi-tag me-2"></i>Pull Request Title
+                    </label>
+                    <input type="text" class="form-control" id="prTitle" placeholder="Enter a descriptive title for your PRs">
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-arrow-up-circle me-2"></i>
+                                    Preprod Cut
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="branch-comparison">
+                                    <div class="branch">staging-v2</div>
+                                    <div class="arrow"></div>
+                                    <div class="branch">preprod-v2</div>
+                                </div>
+                                <button class="btn btn-info w-100 mt-3" id="preprodBtn">
+                                    <i class="bi bi-arrow-repeat me-2"></i>
+                                    Create PRs for Preprod Cut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-arrow-up-circle-fill me-2"></i>
+                                    Prod Release
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="branch-comparison">
+                                    <div class="branch">preprod-v2</div>
+                                    <div class="arrow"></div>
+                                    <div class="branch">main-v2</div>
+                                </div>
+                                <button class="btn btn-success w-100 mt-3" id="prodBtn">
+                                    <i class="bi bi-rocket-takeoff me-2"></i>
+                                    Create PRs for Prod Release
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results mt-4" id="results" style="display: none;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-list-check me-2" style="font-size: 1.25rem;"></i>
+                        <h4 class="mb-0">Results:</h4>
+                    </div>
+                    <div class="text-center mb-3" id="spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Creating pull requests...</p>
+                    </div>
+                    <div id="resultsContent"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4 text-muted">
+            <small>Made with <i class="bi bi-heart-fill text-danger"></i> by the DevOps Team</small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
