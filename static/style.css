@@ -21,10 +21,11 @@ body {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--dark-text);
     min-height: 100vh;
-    padding: 2rem 0;
+    padding: 0;
     transition: var(--transition-normal);
     position: relative;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 body::before {
@@ -111,6 +112,7 @@ body::after {
     position: relative;
     z-index: 1;
     margin: 0 auto;
+    height: 100vh;
 }
 
 @keyframes fadeIn {
@@ -120,7 +122,7 @@ body::after {
 
 .card {
     border: none;
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--card-shadow);
     transition: var(--transition-normal);
@@ -132,13 +134,13 @@ body::after {
 }
 
 .card:hover {
-    transform: translateY(-5px) rotateX(2deg);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) rotateX(1deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
     font-weight: 700;
-    padding: 1.5rem;
+    padding: 0.75rem 1.25rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
@@ -178,13 +180,13 @@ body::after {
 
 .btn {
     font-weight: 600;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 12px;
     border: none;
     transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
@@ -241,7 +243,7 @@ body::after {
 
 .form-control {
     border-radius: 12px;
-    padding: 0.85rem 1.25rem;
+    padding: 0.5rem 1rem;
     border: 1px solid rgba(0, 0, 0, 0.08);
     transition: var(--transition-normal);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -261,14 +263,16 @@ body::after {
 }
 
 .results {
-    padding: 1.75rem;
-    border-radius: 16px;
+    padding: 1rem;
+    border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(8px);
     animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     transition: var(--transition-normal);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 @keyframes slideIn {
@@ -277,9 +281,9 @@ body::after {
 }
 
 .result-item {
-    margin-bottom: 1rem;
-    padding: 1.25rem;
-    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: var(--transition-normal);
     animation: fadeInResult 0.5s ease-out forwards;
@@ -300,8 +304,9 @@ body::after {
 }
 
 .result-item h5 {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .result-success {
@@ -318,14 +323,15 @@ body::after {
 
 .pr-link {
     display: inline-block;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     text-decoration: none;
     color: var(--primary-color);
     font-weight: 600;
     transition: var(--transition-normal);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
     background-color: rgba(99, 102, 241, 0.1);
+    font-size: 0.85rem;
 }
 
 .pr-link:hover {
@@ -362,7 +368,13 @@ body::after {
 
 @media (max-width: 768px) {
     .container {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
+        height: auto;
+        overflow-y: auto;
+    }
+    
+    body {
+        overflow-y: auto;
     }
 }
 
@@ -370,14 +382,15 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     opacity: 0.9;
 }
 
 .branch {
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
     font-weight: 600;
+    font-size: 0.85rem;
     background-color: rgba(243, 244, 246, 0.7);
     backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -392,12 +405,13 @@ body::after {
 }
 
 .arrow {
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     color: #9ca3af;
-    font-size: 1.25rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     position: relative;
+    width: 30px;
 }
 
 .arrow::before {

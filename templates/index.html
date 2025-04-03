@@ -12,124 +12,123 @@
 <body>
     <div class="floating-particles" id="particles"></div>
     
-    <div class="container mt-5">
-        <div class="row mb-4 justify-content-center">
-            <div class="col-md-10 text-center">
-                <div class="d-flex align-items-center justify-content-center mb-3">
-                    <i class="bi bi-git" style="font-size: 2.5rem; color: var(--primary-color);"></i>
-                    <h1 class="ms-3 mb-0" style="font-weight: 700; background: linear-gradient(90deg, var(--primary-color), var(--info-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PRWizard</h1>
+    <div class="container d-flex flex-column vh-100 py-3">
+        <div class="row my-2 justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="bi bi-git" style="font-size: 2rem; color: var(--primary-color);"></i>
+                    <h1 class="ms-2 mb-0 h2" style="font-weight: 700; background: linear-gradient(90deg, var(--primary-color), var(--info-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PRWizard</h1>
                 </div>
-                <p class="lead text-muted">Streamline your GitHub PR workflow across multiple repositories</p>
+                <p class="small text-muted mb-2">Streamline your GitHub PR workflow</p>
             </div>
         </div>
         
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-git me-3" style="font-size: 1.5rem;"></i>
-                    <h2 class="mb-0">Pull Request Creator</h2>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="mb-4">
-                    <p>Create pull requests for all repositories with a single click:</p>
-                    <div class="d-flex flex-wrap gap-2 mt-3">
-                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>drive-frontend</span>
-                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>drive</span>
-                        <span class="badge bg-light text-dark p-2"><i class="bi bi-code-square me-1"></i>tesseract</span>
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="prTitle" class="form-label">
-                        <i class="bi bi-tag me-2"></i>Pull Request Title
-                    </label>
-                    <input type="text" class="form-control" id="prTitle" placeholder="Enter a descriptive title for your PRs">
-                </div>
-                
-                <div class="row mt-4">
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header bg-info text-white">
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-arrow-up-circle me-2"></i>
-                                    Preprod Cut
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="branch-comparison">
-                                    <div class="branch">staging-v2</div>
-                                    <div class="arrow"></div>
-                                    <div class="branch">preprod-v2</div>
-                                </div>
-                                <button class="btn btn-info w-100 mt-3" id="preprodBtn">
-                                    <i class="bi bi-arrow-repeat me-2"></i>
-                                    Create PRs for Preprod Cut
-                                </button>
-                            </div>
+        <div class="row flex-grow-1">
+            <div class="col-lg-12">
+                <div class="card shadow h-100">
+                    <div class="card-header bg-primary text-white py-2">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-git me-2" style="font-size: 1.2rem;"></i>
+                            <h2 class="mb-0 h5">Pull Request Creator</h2>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header bg-success text-white">
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-arrow-up-circle-fill me-2"></i>
-                                    Prod Release
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="branch-comparison">
-                                    <div class="branch">preprod-v2</div>
-                                    <div class="arrow"></div>
-                                    <div class="branch">main-v2</div>
-                                </div>
-                                <button class="btn btn-success w-100 mt-3" id="prodBtn">
-                                    <i class="bi bi-rocket-takeoff me-2"></i>
-                                    Create PRs for Prod Release
-                                </button>
+                    <div class="card-body py-3">
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <p class="mb-0 me-2">Create pull requests for repositories:</p>
+                                <span class="badge bg-light text-dark p-1 me-1"><i class="bi bi-code-square me-1"></i>drive-frontend</span>
+                                <span class="badge bg-light text-dark p-1 me-1"><i class="bi bi-code-square me-1"></i>drive</span>
+                                <span class="badge bg-light text-dark p-1"><i class="bi bi-code-square me-1"></i>tesseract</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="results mt-4" id="results" style="display: none;">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-list-check me-2" style="font-size: 1.25rem;"></i>
-                        <h4 class="mb-0">Results:</h4>
-                    </div>
-                    <div class="text-center mb-3" id="spinner">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                        
+                        <div class="mb-3">
+                            <label for="prTitle" class="form-label mb-1">
+                                <i class="bi bi-tag me-1"></i>Pull Request Title
+                            </label>
+                            <input type="text" class="form-control py-2" id="prTitle" placeholder="Enter a descriptive title for your PRs">
                         </div>
-                        <p class="mt-2">Creating pull requests...</p>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header bg-info text-white py-2">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-arrow-up-circle me-2"></i>
+                                            Preprod Cut
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="branch-comparison py-1">
+                                            <div class="branch">staging-v2</div>
+                                            <div class="arrow"></div>
+                                            <div class="branch">preprod-v2</div>
+                                        </div>
+                                        <button class="btn btn-info w-100 mt-2 py-2" id="preprodBtn">
+                                            <i class="bi bi-arrow-repeat me-2"></i>
+                                            Create PRs for Preprod Cut
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header bg-success text-white py-2">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-arrow-up-circle-fill me-2"></i>
+                                            Prod Release
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="branch-comparison py-1">
+                                            <div class="branch">preprod-v2</div>
+                                            <div class="arrow"></div>
+                                            <div class="branch">main-v2</div>
+                                        </div>
+                                        <button class="btn btn-success w-100 mt-2 py-2" id="prodBtn">
+                                            <i class="bi bi-rocket-takeoff me-2"></i>
+                                            Create PRs for Prod Release
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="results mt-3" id="results" style="display: none;">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-list-check me-2" style="font-size: 1rem;"></i>
+                                <h4 class="mb-0 h6">Results:</h4>
+                            </div>
+                            <div class="text-center mb-2" id="spinner">
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mb-0 small">Creating pull requests...</p>
+                            </div>
+                            <div id="resultsContent"></div>
+                        </div>
                     </div>
-                    <div id="resultsContent"></div>
                 </div>
             </div>
         </div>
         
-        <div class="text-center mt-4 mb-3">
-            <small class="text-muted">Made with <i class="bi bi-heart-fill text-danger"></i> by the DevOps Team</small>
-        </div>
-        
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-8">
-                <div class="card bg-transparent border-0">
-                    <div class="card-body p-0">
-                        <div class="d-flex justify-content-around align-items-center">
-                            <div class="text-center">
-                                <i class="bi bi-github" style="font-size: 2rem; color: var(--primary-color);"></i>
-                                <p class="mt-2 small">GitHub Integration</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="bi bi-check2-circle" style="font-size: 2rem; color: var(--success-color);"></i>
-                                <p class="mt-2 small">Automated Workflow</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="bi bi-clock-history" style="font-size: 2rem; color: var(--info-color);"></i>
-                                <p class="mt-2 small">Time Saving</p>
-                            </div>
+        <div class="row mt-2 mb-0">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Made with <i class="bi bi-heart-fill text-danger"></i> by DevOps</small>
+                    <div class="d-flex">
+                        <div class="text-center me-3">
+                            <i class="bi bi-github" style="font-size: 1.2rem; color: var(--primary-color);"></i>
+                            <span class="ms-1 small">GitHub Integration</span>
+                        </div>
+                        <div class="text-center me-3">
+                            <i class="bi bi-check2-circle" style="font-size: 1.2rem; color: var(--success-color);"></i>
+                            <span class="ms-1 small">Automated Workflow</span>
+                        </div>
+                        <div class="text-center">
+                            <i class="bi bi-clock-history" style="font-size: 1.2rem; color: var(--info-color);"></i>
+                            <span class="ms-1 small">Time Saving</span>
                         </div>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
         // Initialize floating particles
         document.addEventListener('DOMContentLoaded', function() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 40; // Increased particle count
+            const particleCount = 25; // Reduced particle count
             
             // Create particles
             for (let i = 0; i < particleCount; i++) {
@@ -156,10 +155,10 @@
                 particle.className = 'particle';
                 
                 // Random properties
-                const size = Math.random() * 12 + 3; // Larger size range
+                const size = Math.random() * 8 + 2; // Smaller size range
                 const posX = Math.random() * 100;
                 const delay = Math.random() * 15;
-                const duration = Math.random() * 25 + 15; // Longer duration
+                const duration = Math.random() * 25 + 15;
                 
                 // Set particle styling
                 particle.style.width = `${size}px`;
