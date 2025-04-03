@@ -357,7 +357,45 @@ body::after {
 }
 
 #spinner {
-    animation: spin 1s linear infinite, pulse 1s ease-in-out infinite alternate;
+    padding: 1rem 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.spinner-text {
+    margin: 0;
+    font-weight: 500;
+    color: var(--primary-color);
+    position: relative;
+}
+
+.dot-animation {
+    display: inline-block;
+    position: relative;
+    animation: dotPulse 1.5s infinite;
+}
+
+@keyframes dotPulse {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-width: 0.15rem;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

@@ -64,20 +64,23 @@ document.addEventListener('DOMContentLoaded', function() {
         resultsDiv.style.opacity = '1';
         resultsDiv.style.transform = 'translateY(0)';
         
+        // Reset and show spinner
+        spinner.style.display = 'block';
+        spinner.style.opacity = '1';
+        resultsContent.innerHTML = '';
+        
         setTimeout(() => {
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 200);
     }
     
     function displayResults(data) {
-        resultsContent.innerHTML = '';
-        
+        // Fade out spinner gradually
+        spinner.style.transition = 'opacity 0.4s ease';
         spinner.style.opacity = '0';
-        spinner.style.transition = 'opacity 0.3s ease';
         
         setTimeout(() => {
             spinner.style.display = 'none';
-            spinner.style.opacity = '1';
             
             Object.keys(data).forEach((repo, index) => {
                 const result = data[repo];
@@ -110,11 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 100 + (index * 150));
             });
             
-            // Show results container for longer
-            const resultsDiv = document.getElementById('results');
+            // Ensure results container stays visible
             resultsDiv.style.display = 'block';
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 300);
+        }, 400);
     }
     
     async function createPRs(type, button) {
@@ -134,9 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             button.style.opacity = '1';
         }, 200);
         
-        resultsContent.innerHTML = '';
-        spinner.style.display = 'block';
-        
+        // Show results container with spinner
         showResultsContainer();
         
         try {
