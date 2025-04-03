@@ -91,16 +91,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultItem.style.transform = 'translateY(15px)';
                 
                 let resultHTML = `
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="d-flex">
-                            <i class="bi ${result.success ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'} me-2" style="font-size: 1.15rem;"></i>
-                            <div>
-                                <h5>${repo}</h5>
-                                <p class="mb-0 small">${result.message}</p>
-                            </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi ${result.success ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'} me-2" style="font-size: 1.15rem;"></i>
+                        <div>
+                            <h5 class="mb-0 fw-bold">${repo}</h5>
+                            <p class="mb-0 small">${result.message}</p>
                         </div>
-                        ${result.url ? `<a href="${result.url}" target="_blank" class="pr-link ms-2">View PR</a>` : ''}
                     </div>
+                    ${result.url ? `<a href="${result.url}" target="_blank" class="pr-link">View PR</a>` : ''}
                 `;
                 
                 resultItem.innerHTML = resultHTML;
