@@ -88,13 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultItem.style.transform = 'translateY(15px)';
                 
                 let resultHTML = `
-                    <div class="d-flex align-items-start">
-                        <i class="bi ${result.success ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'} me-2" style="font-size: 1.25rem;"></i>
-                        <div>
-                            <h5>${repo}</h5>
-                            <p>${result.message}</p>
-                            ${result.url ? `<a href="${result.url}" target="_blank" class="pr-link">View Pull Request</a>` : ''}
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="d-flex">
+                            <i class="bi ${result.success ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'} me-2" style="font-size: 1.15rem;"></i>
+                            <div>
+                                <h5>${repo}</h5>
+                                <p class="mb-0 small">${result.message}</p>
+                            </div>
                         </div>
+                        ${result.url ? `<a href="${result.url}" target="_blank" class="pr-link ms-2">View PR</a>` : ''}
                     </div>
                 `;
                 
@@ -107,6 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultItem.style.transform = 'translateY(0)';
                 }, 100 + (index * 150));
             });
+            
+            // Show results container for longer
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 300);
     }
     

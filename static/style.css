@@ -265,14 +265,15 @@ body::after {
 .results {
     padding: 1rem;
     border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     transition: var(--transition-normal);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    max-height: 150px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    max-height: 200px;
     overflow-y: auto;
+    margin-top: 1rem;
 }
 
 @keyframes slideIn {
@@ -294,17 +295,17 @@ body::after {
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+.result-item:last-child {
+    margin-bottom: 0;
+}
+
 .result-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
-@keyframes fadeInResult {
-    to { opacity: 1; transform: translateY(0); }
-}
-
 .result-item h5 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     font-weight: 600;
     font-size: 0.95rem;
 }
@@ -322,8 +323,9 @@ body::after {
 }
 
 .pr-link {
-    display: inline-block;
-    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--primary-color);
     font-weight: 600;
@@ -332,12 +334,14 @@ body::after {
     border-radius: 6px;
     background-color: rgba(99, 102, 241, 0.1);
     font-size: 0.85rem;
+    align-self: center;
+    white-space: nowrap;
 }
 
 .pr-link:hover {
     color: var(--primary-hover);
     text-decoration: none;
-    transform: translateX(5px);
+    transform: translateX(2px);
     background-color: rgba(99, 102, 241, 0.15);
 }
 
@@ -349,7 +353,7 @@ body::after {
 
 .pr-link:hover::after {
     opacity: 1;
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 #spinner {
