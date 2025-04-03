@@ -265,14 +265,14 @@ body::after {
 .results {
     padding: 1rem;
     border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: #f7fcf9;
     backdrop-filter: blur(8px);
     animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     transition: var(--transition-normal);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    max-height: 300px;
-    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    max-height: none;
+    overflow-y: visible;
     margin-top: 1rem;
     position: relative;
 }
@@ -282,25 +282,32 @@ body::after {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
 .result-item {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
     padding: 0.75rem 1rem;
     border-radius: 0;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     transition: var(--transition-normal);
     animation: fadeInResult 0.5s ease-out forwards;
     animation-delay: calc(var(--item-index, 0) * 0.15s);
     opacity: 0;
     transform: translateY(10px);
-    background-color: rgba(243, 254, 249, 0.95);
+    background-color: #e6f7f0;
     border-left: 4px solid var(--success-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .result-item:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .result-item:hover {
@@ -319,12 +326,12 @@ body::after {
 }
 
 .result-success {
-    background-color: rgba(243, 254, 249, 0.95);
+    background-color: #e6f7f0;
     border-left: 4px solid var(--success-color);
 }
 
 .result-error {
-    background-color: rgba(254, 242, 242, 0.95);
+    background-color: #fdf1f1;
     border-left: 4px solid var(--error-color);
 }
 
@@ -360,11 +367,11 @@ body::after {
 }
 
 #spinner {
-    padding: 1rem 0.5rem;
+    padding: 1rem;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #f5f9ff;
     border: 1px solid rgba(99, 102, 241, 0.1);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
     margin-bottom: 1rem;
 }
 

@@ -82,10 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             spinner.style.display = 'none';
             
-            Object.keys(data).forEach((repo, index) => {
+            // Clear previous results
+            resultsContent.innerHTML = '';
+            
+            // Add repositories in alphabetical order for consistency
+            const repos = Object.keys(data).sort();
+            repos.forEach((repo, index) => {
                 const result = data[repo];
                 const resultItem = document.createElement('div');
                 resultItem.className = `result-item ${result.success ? 'result-success' : 'result-error'}`;
+                resultItem.style.setProperty('--item-index', index);
                 
                 resultItem.style.opacity = '0';
                 resultItem.style.transform = 'translateY(15px)';
@@ -108,12 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultItem.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
                     resultItem.style.opacity = '1';
                     resultItem.style.transform = 'translateY(0)';
-                }, 100 + (index * 150));
+                }, 100 + (index * 120));
             });
             
             // Ensure results container stays visible
             resultsDiv.style.display = 'block';
-            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 400);
     }
     
