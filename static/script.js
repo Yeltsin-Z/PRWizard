@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.querySelectorAll('.card').forEach((card, index) => {
             card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = `all 0.5s ease ${index * 0.15}s`;
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.15}s`;
             
             setTimeout(() => {
                 card.style.opacity = '1';
@@ -18,6 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         });
     }, 300);
+    
+    setTimeout(() => {
+        document.querySelectorAll('.badge').forEach((badge, index) => {
+            badge.style.opacity = '0';
+            badge.style.transform = 'scale(0.8)';
+            badge.style.transition = `all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.6 + (index * 0.1)}s`;
+            
+            setTimeout(() => {
+                badge.style.opacity = '1';
+                badge.style.transform = 'scale(1)';
+            }, 100);
+        });
+    }, 400);
     
     function validateTitle() {
         const title = prTitleInput.value.trim();
@@ -44,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultsDiv.style.display = 'block';
         resultsDiv.style.opacity = '0';
         resultsDiv.style.transform = 'translateY(20px)';
-        resultsDiv.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        resultsDiv.style.transition = 'opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
         
         resultsDiv.offsetHeight;
         
@@ -89,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultsContent.appendChild(resultItem);
                 
                 setTimeout(() => {
-                    resultItem.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    resultItem.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
                     resultItem.style.opacity = '1';
                     resultItem.style.transform = 'translateY(0)';
                 }, 100 + (index * 150));
@@ -152,10 +165,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const successMessage = document.createElement('div');
                 successMessage.className = 'alert alert-success shadow';
                 successMessage.style.margin = '1rem';
-                successMessage.style.borderRadius = '8px';
+                successMessage.style.borderRadius = '12px';
                 successMessage.style.display = 'flex';
                 successMessage.style.alignItems = 'center';
                 successMessage.style.padding = '1rem 1.5rem';
+                successMessage.style.opacity = '0.95';
+                successMessage.style.transform = 'scale(0.95)';
+                successMessage.style.transition = 'all 0.3s ease';
                 successMessage.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>All PRs created successfully!';
                 
                 notificationContainer.appendChild(successMessage);
@@ -164,6 +180,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 notificationContainer.offsetHeight;
                 
                 notificationContainer.style.transform = 'translateX(-50%) translateY(0)';
+                
+                successMessage.addEventListener('mouseenter', () => {
+                    successMessage.style.opacity = '1';
+                    successMessage.style.transform = 'scale(1)';
+                });
+                
+                successMessage.addEventListener('mouseleave', () => {
+                    successMessage.style.opacity = '0.95';
+                    successMessage.style.transform = 'scale(0.95)';
+                });
                 
                 setTimeout(() => {
                     notificationContainer.style.transform = 'translateX(-50%) translateY(-100%)';
@@ -192,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultsContent.appendChild(errorItem);
             
             setTimeout(() => {
-                errorItem.style.transition = 'all 0.4s ease';
+                errorItem.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
                 errorItem.style.opacity = '1';
                 errorItem.style.transform = 'translateY(0)';
             }, 100);
@@ -234,6 +260,17 @@ document.addEventListener('DOMContentLoaded', function() {
     addButtonEffects(preprodBtn);
     addButtonEffects(prodBtn);
     
+    document.querySelectorAll('.branch').forEach(branch => {
+        setInterval(() => {
+            branch.style.transition = 'all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            branch.style.boxShadow = '0 5px 15px rgba(99, 102, 241, 0.2)';
+            
+            setTimeout(() => {
+                branch.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.05)';
+            }, 1500);
+        }, 3000);
+    });
+    
     const styleSheet = document.createElement('style');
     styleSheet.textContent = `
         @keyframes shake {
@@ -248,27 +285,24 @@ document.addEventListener('DOMContentLoaded', function() {
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes fadeOut {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(-10px); }
-        }
-        
-        @keyframes pulseLight {
-            0%, 100% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
-            50% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        }
-        
-        .is-invalid {
-            border-color: #ef4444 !important;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
-        }
-        
-        .alert {
-            animation: pulseLight 2s infinite;
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
         }
     `;
     document.head.appendChild(styleSheet);
     
     preprodBtn.addEventListener('click', () => createPRs('preprod', preprodBtn));
     prodBtn.addEventListener('click', () => createPRs('prod', prodBtn));
+    
+    prTitleInput.addEventListener('focus', function() {
+        this.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        this.style.transform = 'scale(1.01)';
+        this.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.25)';
+    });
+    
+    prTitleInput.addEventListener('blur', function() {
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
+    });
 }); 
