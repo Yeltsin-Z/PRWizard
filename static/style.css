@@ -523,4 +523,60 @@ body::after {
 .text-center.mt-4 .text-muted:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.pr-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.refresh-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 0;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge i {
+    font-size: 0.8rem;
+}
+
+.result-item {
+    margin-bottom: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    box-shadow: none;
+    transition: var(--transition-normal);
+    animation: fadeInResult 0.5s ease-out forwards;
+    animation-delay: calc(var(--item-index, 0) * 0.15s);
+    opacity: 0;
+    transform: translateY(10px);
+    background-color: #e6f7f0;
+    border-left: 4px solid var(--success-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+#refreshStatusBtn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
 } 

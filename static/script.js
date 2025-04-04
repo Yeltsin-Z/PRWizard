@@ -74,10 +74,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     }
     
+    // Global variable to store the PR URLs for status tracking
+    let createdPRs = [];
+
     function displayResults(data) {
         // Fade out spinner gradually
         spinner.style.transition = 'opacity 0.4s ease';
         spinner.style.opacity = '0';
+        
+        // Reset global PR URLs
+        createdPRs = [];
         
         setTimeout(() => {
             spinner.style.display = 'none';
@@ -85,16 +91,35 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear previous results
             resultsContent.innerHTML = '';
             
+            // Create refresh button
+            const refreshRow = document.createElement('div');
+            refreshRow.className = 'refresh-row mb-3';
+            refreshRow.innerHTML = `
+                <button class="btn btn-sm btn-outline-primary" id="refreshStatusBtn">
+                    <i class="bi bi-arrow-clockwise me-1"></i>Refresh Status
+                </button>
+            `;
+            resultsContent.appendChild(refreshRow);
+            
+            // Add event listener to refresh button
+            document.getElementById('refreshStatusBtn').addEventListener('click', fetchPRStatus);
+            
             // Add repositories in alphabetical order for consistency
             const repos = Object.keys(data).sort();
             repos.forEach((repo, index) => {
                 const result = data[repo];
                 const resultItem = document.createElement('div');
                 resultItem.className = `result-item ${result.success ? 'result-success' : 'result-error'}`;
+                resultItem.setAttribute('data-repo', repo);
                 resultItem.style.setProperty('--item-index', index);
                 
                 resultItem.style.opacity = '0';
                 resultItem.style.transform = 'translateY(15px)';
+                
+                // Store PR URL for status checking
+                if (result.success && result.url) {
+                    createdPRs.push(result.url);
+                }
                 
                 let resultHTML = `
                     <div class="d-flex align-items-center">
@@ -104,7 +129,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="mb-0 small">${result.message}</p>
                         </div>
                     </div>
-                    ${result.url ? `<a href="${result.url}" target="_blank" class="pr-link">View PR</a>` : ''}
+                    <div class="d-flex align-items-center">
+                        ${result.url ? 
+                            `<a href="${result.url}" target="_blank" class="pr-link">View PR</a>
+                            <div class="pr-status ms-2" data-pr-url="${result.url}">
+                                <span class="badge bg-secondary"><i class="bi bi-hourglass-split me-1"></i>Loading...</span>
+                            </div>` 
+                            : ''
+                        }
+                    </div>
                 `;
                 
                 resultItem.innerHTML = resultHTML;
@@ -119,7 +152,87 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Ensure results container stays visible
             resultsDiv.style.display = 'block';
+            
+            // After a short delay, fetch PR statuses
+            if (createdPRs.length > 0) {
+                setTimeout(fetchPRStatus, 1500);
+            }
         }, 400);
+    }
+    
+    function fetchPRStatus() {
+        if (createdPRs.length === 0) return;
+        
+        // Update all PR status indicators to "loading"
+        document.querySelectorAll('.pr-status').forEach(statusElement => {
+            statusElement.innerHTML = `<span class="badge bg-secondary"><i class="bi bi-hourglass-split me-1"></i>Loading...</span>`;
+        });
+        
+        fetch('/pr-status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                pr_urls: createdPRs
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            updatePRStatus(data);
+        })
+        .catch(error => {
+            console.error('Error fetching PR status:', error);
+        });
+    }
+    
+    function updatePRStatus(statusData) {
+        Object.keys(statusData).forEach(prKey => {
+            const prResult = statusData[prKey];
+            if (!prResult.success) return;
+            
+            const prData = prResult.data;
+            const prUrl = prData.html_url;
+            
+            // Find the status element for this PR
+            const statusElement = document.querySelector(`.pr-status[data-pr-url="${prUrl}"]`);
+            if (!statusElement) return;
+            
+            // Update the status display
+            let statusHTML = '';
+            
+            // Check for merge conflicts
+            if (prData.has_conflicts) {
+                statusHTML += `<span class="badge bg-danger ms-1"><i class="bi bi-exclamation-triangle-fill me-1"></i>Conflicts</span>`;
+            }
+            
+            // Check reviews status
+            if (prData.reviews.approved > 0) {
+                statusHTML += `<span class="badge bg-success ms-1"><i class="bi bi-check-circle-fill me-1"></i>Approved (${prData.reviews.approved})</span>`;
+            } else if (prData.reviews.changes_requested > 0) {
+                statusHTML += `<span class="badge bg-warning text-dark ms-1"><i class="bi bi-pencil-fill me-1"></i>Changes Requested</span>`;
+            } else if (prData.reviews.review_required) {
+                statusHTML += `<span class="badge bg-secondary ms-1"><i class="bi bi-eye me-1"></i>Review Needed</span>`;
+            }
+            
+            // Check CI status
+            if (prData.status_checks.total > 0) {
+                if (prData.status_checks.failure > 0) {
+                    statusHTML += `<span class="badge bg-danger ms-1"><i class="bi bi-x-circle-fill me-1"></i>CI Failed</span>`;
+                } else if (prData.status_checks.pending > 0) {
+                    statusHTML += `<span class="badge bg-info text-white ms-1"><i class="bi bi-hourglass-split me-1"></i>CI Running</span>`;
+                } else if (prData.status_checks.success === prData.status_checks.total) {
+                    statusHTML += `<span class="badge bg-success ms-1"><i class="bi bi-check-circle-fill me-1"></i>CI Passed</span>`;
+                }
+            }
+            
+            // If no status badges were added, show a default "Open" badge
+            if (statusHTML === '') {
+                statusHTML = `<span class="badge bg-primary ms-1"><i class="bi bi-git-pull-request me-1"></i>Open</span>`;
+            }
+            
+            statusElement.innerHTML = statusHTML;
+        });
     }
     
     async function createPRs(type, button) {
